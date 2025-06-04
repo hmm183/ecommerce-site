@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "name": "your-ecommerce-app",
+  "builds": [
+    {
+      "src": "server/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",    
+      "dest": "server/index.js"
+    },
+    {
+      "src": "/(.*)",  
+      "dest": "server/index.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "installCommand": "npm install --prefix client && npm install --prefix server",
+  "buildCommand": "npm run build --prefix client && rm -rf server/public && mv client/build server/public"
+}

@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+.env # Environment variables
+
+# React (client) specific
+client/build/
+client/node_modules/
+.DS_Store # macOS specific
+
+# Express (server) specific
+server/node_modules/
+server/public/ # If your client build goes here, you want to ignore it in Git
+               # as it's built during deployment, not tracked.
+# Or if you put client build inside server/public only on Vercel,
+# you might want to keep server/public tracked for local dev,
+# but usually it's best to build it on demand.
+
+# Vercel
+.vercel/
