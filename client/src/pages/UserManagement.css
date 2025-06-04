@@ -1,0 +1,434 @@
+/* UserManagement.css */
+
+.user-management-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 3rem auto; /* Center the panel */
+  background-color: rgba(42, 42, 42, 0.7); /* Semi-transparent dark for glass effect */
+  backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+  color: #e0e0e0; /* Light text color for general content */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Deep shadow for floating effect */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  text-align: center; /* Center content within the panel */
+}
+
+.user-management-container h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3rem; /* Large heading */
+  font-weight: 900;
+  color: #e94560; /* Accent color for admin headings */
+  margin-bottom: 2.5rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.7); /* Neon glow */
+}
+
+/* Search and Export Section */
+.controls-bar {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center; /* Center the items initially */
+  align-items: center;
+  gap: 1.5rem; /* Space between input and button */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  background-color: rgba(30, 30, 30, 0.8);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-input {
+  padding: 0.8rem 1.2rem;
+  width: calc(100% - 150px); /* Adjust width for button */
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(60, 60, 60, 0.7);
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3), inset 0 1px 5px rgba(0, 0, 0, 0.3);
+  background-color: rgba(70, 70, 70, 0.8);
+}
+
+.export-csv-btn {
+  padding: 0.8rem 1.8rem;
+  background-color: #007bff; /* Standard blue, adjust if you want more neon */
+  color: white;
+  border: none;
+  border-radius: 49px; /* Pill shape */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.export-csv-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  gap: 25px; /* Increased gap */
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 280px; /* Slightly wider min-width */
+  padding: 25px; /* Increased padding */
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px; /* Slightly more rounded */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  color: #c0c0c0; /* Light gray for content */
+  text-align: left; /* Align text within card to left */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); /* More pronounced shadow */
+}
+
+.stat-card h3 {
+  color: #00bcd4; /* Accent color for card headings */
+  font-family: "Playfair Display", serif;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+.stat-card p {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.stat-card p strong {
+  font-weight: bold;
+  font-size: 1.2rem;
+  /* Specific colors for strong tags for better visibility */
+}
+
+.stat-card p strong.primary-accent { color: #00bcd4; text-shadow: 0 0 8px rgba(0, 188, 212, 0.4); }
+.stat-card p strong.success-color { color: #2ecc71; text-shadow: 0 0 8px rgba(46, 204, 113, 0.4); }
+.stat-card p strong.danger-color { color: #e74c3c; text-shadow: 0 0 8px rgba(231, 76, 60, 0.4); }
+.stat-card p strong.purple-accent { color: #9b59b6; text-shadow: 0 0 8px rgba(155, 89, 182, 0.4); }
+.stat-card p strong.warning-color { color: #f1c40f; text-shadow: 0 0 8px rgba(241, 196, 15, 0.4); }
+.stat-card p strong.info-color { color: #3498db; text-shadow: 0 0 8px rgba(52, 152, 219, 0.4); }
+.stat-card p strong.orange-accent { color: #e67e22; text-shadow: 0 0 8px rgba(230, 126, 34, 0.4); }
+.stat-card p strong.teal-accent { color: #1abc9c; text-shadow: 0 0 8px rgba(26, 188, 156, 0.4); }
+
+
+/* Chart Containers */
+.chart-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  gap: 25px;
+}
+
+.chart-card {
+  width: 320px; /* Slightly larger for charts */
+  height: 320px;
+  padding: 20px;
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* For chart legend positioning */
+}
+
+.chart-card h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #00bcd4; /* Accent color for chart titles */
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+/* Section Headings for lists/tables */
+.section-heading {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #e94560; /* Accent color for list/table headings */
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  text-shadow: 0 0 15px rgba(233, 69, 96, 0.6);
+  text-align: center;
+}
+
+/* Top Users List */
+.top-users-list {
+  list-style-type: none;
+  padding: 0;
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  overflow: hidden; /* Ensures border-radius applies to last child */
+  margin-top: 1.5rem; /* Space below heading */
+}
+
+.top-users-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle separator */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #c0c0c0;
+  font-size: 1.1rem;
+}
+
+.top-users-item:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.top-users-item span.user-name {
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.order-count-badge {
+  background-color: #0f3460; /* Darker accent for badge */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px; /* Pill shape */
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Users Table */
+.users-table-wrapper {
+  overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  margin-top: 1.5rem; /* Space below heading */
+  background-color: rgba(30, 30, 30, 0.8); /* Match card background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0e0e0;
+  text-align: left;
+}
+
+.users-table th,
+.users-table td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle separator */
+  white-space: nowrap; /* Prevent text wrapping in table headers/cells */
+}
+
+.users-table th {
+  background-color: rgba(45, 45, 45, 0.9);
+  color: #00bcd4; /* Accent color for table headers */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+}
+
+.users-table td {
+  color: #c0c0c0;
+  font-size: 1rem;
+}
+
+.users-table tr:last-child td {
+  border-bottom: none; /* No border for the last row */
+}
+
+.ban-toggle-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 49px; /* Pill shape */
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ban-toggle-btn.banned {
+  background-color: #dc3545; /* Red for Unban (currently banned) */
+}
+
+.ban-toggle-btn.banned:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ban-toggle-btn.active {
+  background-color: #28a745; /* Green for Ban (currently active) */
+}
+
+.ban-toggle-btn.active:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Table Design (using data-label for small screens) */
+@media (max-width: 768px) {
+  .users-table thead {
+    display: none; /* Hide table headers on small screens */
+  }
+
+  .users-table, .users-table tbody, .users-table tr, .users-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .users-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .users-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%; /* Space for the "label" */
+    text-align: right;
+    font-size: 0.95rem;
+  }
+
+  .users-table td:before {
+    content: attr(data-label); /* Use data-label for pseudo-elements */
+    position: absolute;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #00bcd4; /* Accent color for labels */
+  }
+
+  /* Specific data-label content for each column */
+  .users-table td:nth-of-type(1):before { content: "Username"; }
+  .users-table td:nth-of-type(2):before { content: "Email"; }
+  .users-table td:nth-of-type(3):before { content: "Role"; }
+  .users-table td:nth-of-type(4):before { content: "Banned"; }
+  .users-table td:nth-of-type(5):before { content: "Actions"; }
+}
+
+
+/* General Responsive Adjustments */
+@media (max-width: 992px) {
+  .user-management-container {
+    padding: 1.5rem;
+    margin: 2rem auto;
+  }
+  .user-management-container h1 {
+    font-size: 2.5rem;
+  }
+  .controls-bar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .search-input {
+    width: 100%;
+    max-width: unset;
+  }
+  .export-csv-btn {
+    width: 100%;
+  }
+  .stats-grid, .chart-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .stat-card, .chart-card {
+    min-width: unset;
+    width: 100%; /* Take full width in column layout */
+    max-width: 400px; /* Max width for readability */
+  }
+  .chart-card {
+    height: 350px; /* Adjust height for bar chart to prevent squash */
+  }
+  .section-heading {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-management-container {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+  .user-management-container h1 {
+    font-size: 2rem;
+  }
+  .stat-card {
+    padding: 20px;
+  }
+  .stat-card h3 {
+    font-size: 1.3rem;
+  }
+  .stat-card p {
+    font-size: 1rem;
+  }
+  .chart-card {
+    padding: 15px;
+    height: 300px;
+  }
+  .chart-card h3 {
+    font-size: 1.2rem;
+  }
+  .section-heading {
+    font-size: 1.8rem;
+  }
+  .top-users-item {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+  .order-count-badge {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+  .users-table td {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+  .users-table td:before {
+    font-size: 0.9rem;
+    left: 10px;
+    width: 40%;
+  }
+  .ban-toggle-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}

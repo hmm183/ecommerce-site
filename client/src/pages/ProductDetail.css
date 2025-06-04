@@ -1,0 +1,167 @@
+/* ProductDetail.css */
+
+.product-detail {
+  /* No need for background-color, background-image, background-size here
+     because the body already handles the animated dark dotted background from App.css. */
+  padding: 2.5rem; /* Increased padding */
+  max-width: 900px; /* Slightly wider max-width */
+  margin: 3rem auto; /* More margin to center the card */
+  /* Semi-transparent dark background for the detail card, similar to product cards */
+  background-color: rgba(42, 42, 42, 0.7);
+  backdrop-filter: blur(8px); /* More blur for a stronger glass effect */
+  color: #e0e0e0; /* Light text color for contrast */
+  border-radius: 15px; /* More rounded corners */
+  /* Deeper shadow for a floating, prominent look */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly stronger subtle border */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content vertically */
+  text-align: center; /* Center text within the card */
+}
+
+.product-detail img {
+  max-width: 350px; /* Slightly larger image */
+  width: 100%; /* Ensure responsiveness */
+  height: auto;
+  border-radius: 8px; /* Slightly rounded corners for the image */
+  margin-bottom: 2rem; /* More space below image */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow for image */
+}
+
+.product-detail h2 {
+  /* Consistent title styling with App.css */
+  font-family: "Playfair Display", serif;
+  font-size: 3rem; /* Larger heading for product name */
+  font-weight: 900;
+  color: #00bcd4; /* Accent color */
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(0, 188, 212, 0.7); /* Stronger neon glow for product name */
+}
+
+.product-detail p {
+  line-height: 1.8; /* Increased line height for readability */
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: #c0c0c0; /* Slightly desaturated light color for body text */
+  max-width: 700px; /* Limit description width for better readability */
+}
+
+.product-detail p strong {
+  color: #e94560; /* Accent color for price */
+  font-size: 1.8rem; /* Larger price font */
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.product-detail div {
+  margin-bottom: 1.2rem; /* Spacing for size/color selections */
+  width: 100%;
+  max-width: 300px; /* Limit width of select fields */
+}
+
+.product-detail label {
+  margin-right: 1rem;
+  color: #a0a0a0; /* Consistent label color */
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.product-detail select {
+  padding: 0.8rem 1rem; /* More padding */
+  border-radius: 8px; /* More rounded */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+  background-color: rgba(50, 50, 50, 0.8); /* Darker semi-transparent background */
+  color: #e0e0e0; /* Light text color */
+  font-size: 1rem;
+  appearance: none; /* Remove default select arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail select:focus {
+  outline: none;
+  border-color: #00FFFF; /* Cyan glow on focus */
+  box-shadow: 0 0 0 3px #00FFFF, inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Cyan neon glow */
+}
+
+.product-detail button.btn {
+  /* Leverage the global .btn style from App.css for consistency */
+  margin-top: 2rem; /* More space above the button */
+  width: 200px; /* Fixed width for consistency */
+}
+
+/* Media Queries for ProductDetail */
+@media (max-width: 768px) {
+  .product-detail {
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+  .product-detail img {
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+  }
+  .product-detail h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  .product-detail p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .product-detail p strong {
+    font-size: 1.5rem;
+  }
+  .product-detail div {
+    margin-bottom: 1rem;
+  }
+  .product-detail select {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.95rem;
+  }
+  .product-detail button.btn {
+    width: 180px;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-detail {
+    padding: 1.5rem;
+    margin: 1rem auto;
+    border-radius: 10px;
+  }
+  .product-detail img {
+    max-width: 200px;
+    margin-bottom: 1rem;
+  }
+  .product-detail h2 {
+    font-size: 1.8rem;
+  }
+  .product-detail p {
+    font-size: 0.9rem;
+  }
+  .product-detail p strong {
+    font-size: 1.3rem;
+  }
+  .product-detail label {
+    font-size: 1rem;
+  }
+  .product-detail select {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.9rem;
+  }
+  .product-detail button.btn {
+    width: 150px;
+    height: 45px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+}

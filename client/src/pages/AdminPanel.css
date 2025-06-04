@@ -1,0 +1,273 @@
+/* AdminPanel.css */
+
+.admin-panel {
+  padding: 2.5rem;
+  max-width: 1200px; /* Wider to accommodate table */
+  margin: 3rem auto; /* Center the panel */
+  background-color: rgba(42, 42, 42, 0.7); /* Semi-transparent dark for glass effect */
+  backdrop-filter: blur(8px); /* Blur effect for glassmorphism */
+  color: #e0e0e0; /* Light text color */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Deep shadow for floating effect */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  text-align: center; /* Center content within the panel */
+}
+
+.admin-panel h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3rem; /* Large heading */
+  font-weight: 900;
+  color: #e94560; /* Accent color for admin headings */
+  margin-bottom: 2.5rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.7); /* Neon glow */
+}
+
+/* Product Form Styles */
+.product-form {
+  background-color: rgba(30, 30, 30, 0.8); /* Slightly darker background for form */
+  padding: 2.5rem;
+  border-radius: 10px;
+  margin-bottom: 3rem; /* Space below the form */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Space between form elements */
+  max-width: 600px; /* Limit form width */
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-form h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #00bcd4; /* Accent color for form title */
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+}
+
+.product-form input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(60, 60, 60, 0.7); /* Darker input background */
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.product-form input::placeholder {
+  color: #aaa;
+}
+
+.product-form input:focus {
+  outline: none;
+  border-color: #00bcd4; /* Accent border on focus */
+  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3), inset 0 1px 5px rgba(0, 0, 0, 0.3);
+  background-color: rgba(70, 70, 70, 0.8); /* Slightly lighter on focus */
+}
+
+.product-form .btn.solid {
+  /* This will pick up styles from App.css for .btn.solid */
+  margin-top: 1.5rem;
+  width: 200px; /* Fixed width for the form button */
+  align-self: center; /* Center the button within the flex container */
+}
+
+/* Product Table Styles */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 3rem;
+  background-color: rgba(30, 30, 30, 0.8); /* Slightly darker background for table */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.product-table th,
+.product-table td {
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+  font-size: 1rem;
+}
+
+.product-table th {
+  background-color: rgba(45, 45, 45, 0.9);
+  color: #e94560; /* Accent color for table headers */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product-table td {
+  color: #c0c0c0;
+}
+
+.product-table tr:last-child td {
+  border-bottom: none;
+}
+
+.product-table button {
+  background-color: #00bcd4; /* Cyan accent for table buttons */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  margin-right: 0.8rem; /* Space between buttons */
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.product-table button:last-child {
+  margin-right: 0; /* No margin on the last button */
+}
+
+.product-table button:hover {
+  background-color: #0097a7; /* Darker cyan on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.product-table button:last-child {
+  background-color: #dc3545; /* Red for delete button */
+}
+
+.product-table button:last-child:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Responsive Table Design */
+@media (max-width: 992px) {
+  .admin-panel {
+    padding: 1.5rem;
+    margin: 2rem auto;
+  }
+  .admin-panel h1 {
+    font-size: 2.5rem;
+  }
+  .product-form {
+    padding: 2rem;
+  }
+  .product-form h2 {
+    font-size: 1.8rem;
+  }
+  .product-form input {
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+  }
+  .product-table th,
+  .product-table td {
+    padding: 1rem;
+  }
+  .product-table button {
+    padding: 0.5rem 0.8rem;
+    margin-right: 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-panel h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  .product-form {
+    padding: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .product-form h2 {
+    font-size: 1.5rem;
+  }
+  .product-form .btn.solid {
+    width: 150px;
+    margin-top: 1rem;
+  }
+
+  /* Make table rows act like blocks and hide headers */
+  .product-table, .product-table thead, .product-table tbody, .product-table th, .product-table td, .product-table tr {
+    display: block;
+  }
+  .product-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .product-table tr {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: rgba(30, 30, 30, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  .product-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%; /* Space for the "label" */
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  .product-table td:before {
+    content: attr(data-label); /* Use data-label for pseudo-elements */
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #e94560; /* Accent color for labels */
+  }
+  /* Assign data-label attributes in your JSX for each td */
+  .product-table td:nth-of-type(1):before { content: "Product Name"; }
+  .product-table td:nth-of-type(2):before { content: "Price"; }
+  .product-table td:nth-of-type(3):before { content: "Category"; }
+  .product-table td:nth-of-type(4):before { content: "Actions"; }
+
+  .product-table button {
+    width: auto; /* Allow buttons to size naturally */
+    display: inline-block;
+    margin: 0.4rem; /* Adjust margin for stacked buttons */
+    padding: 0.6rem 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-panel {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+  .admin-panel h1 {
+    font-size: 1.6rem;
+  }
+  .product-form {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+  .product-form input {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  .product-form .btn.solid {
+    width: 120px;
+    font-size: 0.9rem;
+  }
+  .product-table td {
+    padding: 0.8rem 10px;
+    padding-left: 40%;
+  }
+  .product-table td:before {
+    width: 35%;
+  }
+  .product-table button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    margin: 0.3rem;
+  }
+}

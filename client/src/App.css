@@ -1,0 +1,871 @@
+/* App.css - Rebranded Dark Style with Enhanced Features */
+
+/* Import Google Fonts - Montserrat for body, Playfair Display for titles */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap");
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and Input Defaults with Montserrat */
+body,
+input {
+  font-family: "Montserrat", sans-serif;
+  background-color: #1a1a2e; /* Ensures a dark background for all pages using this CSS */
+  /* Animated subtle gradient background for the entire body */
+  background-image: 
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px),
+    linear-gradient(135deg, #1a1a2e 0%, #0f192a 50%, #1a1a2e 100%);
+  background-size: 20px 20px, 20px 20px, 200% 200%;
+  animation: background-pan 15s linear infinite alternate; /* Slow pan animation */
+}
+
+/* Keyframes for pulsating button effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 255, 0.4); /* Neon glow */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Keyframes for button ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Keyframes for animated background gradient */
+@keyframes background-pan {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+/* --- Styles for Auth.jsx (Login/Signup Page) --- */
+.container {
+  position: relative;
+  width: 100%;
+  background-color: transparent; /* Changed to transparent to show body background */
+  min-height: 100vh;
+  overflow: hidden;
+  /* Removed animated background from here, it's now on body */
+}
+
+.forms-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.signin-signup {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 75%;
+  width: 50%;
+  /* Added opacity to transition for fade effect */
+  transition: 1s 0.7s ease-in-out, opacity 0.8s ease-in-out; 
+  display: grid;
+  grid-template-columns: 1fr;
+  z-index: 5;
+}
+
+/* Styling for forms within the .signin-signup container (Auth.jsx) */
+.signin-signup form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0rem 5rem;
+  /* Adjusted transition for fade effect */
+  transition: all 0.4s 0.7s ease-in-out; 
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+
+  /* Explicitly removed glassmorphism effect from signin-signup form */
+  background-color: transparent; 
+  backdrop-filter: none; 
+  border: none; 
+  box-shadow: none; 
+  border-radius: 0; 
+}
+
+form.sign-up-form {
+  opacity: 0;
+  z-index: 1;
+  transform: translateX(100%); /* Start from right for slide-in */
+}
+
+form.sign-in-form {
+  z-index: 2;
+  transform: translateX(0%); /* Initial position */
+}
+
+.container.sign-up-mode form.sign-up-form {
+  opacity: 1;
+  z-index: 2;
+  transform: translateX(0%); /* Slide to center */
+}
+
+.container.sign-up-mode form.sign-in-form {
+  opacity: 0;
+  z-index: 1;
+  transform: translateX(-100%); /* Slide to left */
+}
+
+
+.title {
+  font-family: "Playfair Display", serif; /* Secondary font for titles */
+  font-size: 2.5rem; /* Slightly larger title */
+  font-weight: 900; /* Heavier weight for titles */
+  color: #e0e0e0; /* Light text for dark theme */
+  margin-bottom: 15px; /* Increased margin */
+  letter-spacing: 2px; /* Increased letter spacing for titles */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Subtle text shadow */
+  text-transform: uppercase; /* Uppercase for titles */
+}
+
+.input-field {
+  max-width: 380px;
+  width: 100%;
+  background-color: #2c2c4e; /* Darker background for input fields */
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  position: relative;
+  /* Subtle gradient for input fields */
+  background-image: linear-gradient(to right, #2c2c4e, #3e3e60); 
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for focus effects */
+  border: 1px dotted rgba(255, 255, 255, 0.3); /* Added dotted border */
+}
+
+.input-field i {
+  text-align: center;
+  line-height: 55px;
+  color: #999; /* Slightly lighter icon color */
+  transition: 0.5s;
+  font-size: 1.1rem;
+}
+
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #e0e0e0; /* Light text color */
+}
+
+.input-field input::placeholder {
+  color: #aaa; /* Lighter placeholder text */
+  font-weight: 400; /* Lighter weight for placeholders */
+}
+
+/* Neon glow on input focus */
+.input-field input:focus {
+  box-shadow: 0 0 0 3px #00FFFF, inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Cyan neon glow */
+  transform: scale(1.01); /* Slight grow on focus */
+}
+
+
+.social-text {
+  padding: 0.7rem 0;
+  font-size: 1rem;
+  color: #e0e0e0; /* Light text color */
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icon {
+  height: 46px;
+  width: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.45rem;
+  color: #e0e0e0; /* Light icon color */
+  border-radius: 50%;
+  border: 1px solid #e0e0e0; /* Light border */
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  color: #FF69B4; /* Pink neon accent color on hover */
+  border-color: #FF69B4; /* Pink neon accent color on hover */
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6); /* Subtle pink glow on hover */
+  transform: translateY(-2px); /* Slight lift */
+}
+
+/* General button styling */
+.btn {
+  width: 150px;
+  background-color: #e94560; /* Accent color for buttons */
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  /* Subtle gradient for buttons */
+  background-image: linear-gradient(to right, #e94560, #0f3460); 
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Initial shadow */
+  transition: 0.5s ease-in-out; /* Smooth transition for hover effects */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  position: relative; /* Needed for ripple effect */
+  overflow: hidden; /* Hide ripple overflow */
+}
+
+.btn:hover {
+  background-color: #0f3460; /* Darker accent on hover */
+  transform: translateY(-3px) scale(1.02); /* Slight lift and scale */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
+  background-image: linear-gradient(to right, #0f3460, #e94560); /* Reverse gradient on hover */
+  animation: pulse 1.5s infinite alternate; /* Pulsating animation on hover */
+}
+
+/* Ripple effect pseudo-element */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3); /* White ripple */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: none; /* Reset transition for immediate ripple start */
+}
+
+.btn:hover::before {
+  animation: ripple 0.6s ease-out forwards; /* Apply ripple animation on hover */
+}
+
+
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff; /* White border for transparent buttons */
+  width: 130px;
+  height: 41px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  box-shadow: none; /* No initial shadow for transparent buttons */
+}
+
+.panel .btn.transparent:hover {
+  color: #fff;
+  background-color: #e94560; /* Accent color on hover for panel buttons */
+  transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow on hover */
+}
+
+a.btn.transparent:hover {
+  background-color: #3e3e60; /* Slightly lighter dark background on hover */
+  border-color: #555;
+  transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow on hover */
+}
+
+.panels-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container:before {
+  content: "";
+  position: absolute;
+  height: 2000px;
+  width: 2000px;
+  top: -10%;
+  right: 48%;
+  transform: translateY(-50%);
+  /* Darker gradient for the background circle, added a third color for more vibrancy */
+  background-image: linear-gradient(-45deg, #0f3460 0%, #e94560 50%, #4CAF50 100%); 
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+.image {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  /* Added opacity to transition for fade effect */
+  transition: transform 1.1s ease-in-out, opacity 0.8s ease-in-out; 
+  transition-delay: 0.4s;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 7;
+}
+
+.left-panel {
+  pointer-events: all;
+  padding: 3rem 17% 2rem 12%;
+}
+
+.right-panel {
+  pointer-events: none;
+  padding: 3rem 12% 2rem 17%;
+}
+
+.panel .content {
+  color: #fff;
+  /* Added opacity to transition for fade effect */
+  transition: transform 0.9s ease-in-out, opacity 0.6s ease-in-out; 
+  transition-delay: 0.6s;
+}
+
+.panel h3 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.panel p {
+  font-size: 0.95rem;
+  padding: 0.7rem 0;
+}
+
+/* Initial state for right panel elements (hidden and slid) */
+.right-panel .image,
+.right-panel .content {
+  transform: translateX(800px);
+  opacity: 0; /* Start hidden */
+}
+
+/* Sign-up mode transitions */
+.container.sign-up-mode:before {
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+  transform: translateX(-800px);
+  opacity: 0; /* Fade out */
+}
+
+.container.sign-up-mode .signin-signup {
+  left: 25%;
+  opacity: 1; /* Fade in */
+}
+
+.container.sign-up-mode form.sign-up-form {
+  opacity: 1;
+  z-index: 2;
+}
+
+.container.sign-up-mode form.sign-in-form {
+  opacity: 0;
+  z-index: 1;
+}
+
+.container.sign-up-mode .right-panel .image,
+.container.sign-up-mode .right-panel .content {
+  transform: translateX(0%);
+  opacity: 1; /* Fade in */
+}
+
+.container.sign-up-mode .left-panel {
+  pointer-events: none;
+}
+
+.container.sign-up-mode .right-panel {
+  pointer-events: all;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1a1a2e; /* Dark background */
+  padding: 20px;
+}
+
+.auth-card form {
+  /* Explicitly removed glassmorphism effect from auth-card form */
+  background-color: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 10px; /* Reverted to original */
+  transition: none; /* Removed hover effect transition */
+
+  /* Re-added original styling for auth-card form */
+  padding: 2.5rem 3rem;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column: auto;
+  grid-row: auto;
+}
+
+/* Auth card hover effect - Removed */
+.auth-card form:hover {
+  transform: none; /* Removed tilt and scale */
+  box-shadow: none; /* Removed pronounced shadow */
+}
+
+/* New .vauth-card styles */
+.vauth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Re-added glassmorphism effect for vauth-card */
+  background-color: rgba(44, 44, 78, 0.5); /* Semi-transparent dark background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow for floating effect */
+  border-radius: 15px; /* Slightly more rounded corners for glass effect */
+  padding: 2.5rem 3rem; /* Match padding of other forms */
+  width: 100%;
+  max-width: 480px;
+  margin: 20px auto; /* Center the card */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* For hover effect */
+}
+
+.vauth-card:hover {
+  transform: perspective(1000px) rotateY(3deg) scale(1.01); /* Slight tilt and scale */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* More pronounced shadow */
+}
+
+.vauth-card h2 {
+  font-family: "Playfair Display", serif; /* Secondary font for titles */
+  font-size: 2.2rem; /* Slightly larger title */
+  font-weight: 900; /* Heavier weight for titles */
+  color: #e0e0e0; /* Light text */
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 1.5px; /* Increased letter spacing for auth card titles */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); /* Subtle text shadow */
+  text-transform: uppercase; /* Uppercase for titles */
+}
+
+.vauth-card p {
+  font-size: 0.95rem;
+  color: #ccc; /* Lighter text */
+  margin-bottom: 25px;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+.vauth-card p b {
+  color: #e94560; /* Accent color for bold text */
+  font-weight: 600;
+}
+
+.vauth-card input[type="text"] {
+  max-width: 380px;
+  width: 100%;
+  background-color: #3e3e60; /* Even darker input background */
+  margin: 0 0 20px 0;
+  height: 55px;
+  border-radius: 55px;
+  padding: 0 1.5rem;
+  border: none;
+  outline: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #e0e0e0; /* Light text */
+  box-sizing: border-box;
+  text-align: center;
+  /* Subtle gradient for input fields */
+  background-image: linear-gradient(to right, #3e3e60, #2c2c4e); 
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for focus effects */
+  border: 1px dotted rgba(255, 255, 255, 0.3); /* Added dotted border */
+}
+
+.vauth-card input[type="text"]::placeholder {
+  color: #aaa; /* Lighter placeholder */
+  font-weight: 400; /* Lighter weight for placeholders */
+  text-align: center;
+}
+
+/* Neon glow on vauth-card input focus */
+.vauth-card input[type="text"]:focus {
+  box-shadow: 0 0 0 3px #00FFFF, inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Cyan neon glow */
+  transform: scale(1.01); /* Slight grow on focus */
+}
+
+.vauth-card .btn.solid {
+  width: 100%;
+  max-width: 380px;
+  height: 49px;
+  margin-top: 10px;
+  background-color: #e94560; /* Accent color */
+  /* Subtle gradient for solid button */
+  background-image: linear-gradient(to right, #e94560, #0f3460); 
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Initial shadow */
+  transition: 0.5s ease-in-out; /* Smooth transition for hover effects */
+  position: relative; /* Needed for ripple effect */
+  overflow: hidden; /* Hide ripple overflow */
+}
+
+.vauth-card .btn.solid:hover {
+  transform: translateY(-3px) scale(1.02); /* Slight lift and scale */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
+  background-image: linear-gradient(to right, #0f3460, #e94560); /* Reverse gradient on hover */
+  animation: pulse 1.5s infinite alternate; /* Pulsating animation on hover */
+}
+
+/* Ripple effect pseudo-element for vauth-card buttons */
+.vauth-card .btn.solid::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3); /* White ripple */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: none; /* Reset transition for immediate ripple start */
+}
+
+.vauth-card .btn.solid:hover::before {
+  animation: ripple 0.6s ease-out forwards; /* Apply ripple animation on hover */
+}
+
+
+/* Media Queries - Adjusted for dark theme and transitions */
+@media (max-width: 870px) {
+  .container {
+    min-height: 800px;
+    height: 100vh;
+  }
+  .signin-signup {
+    width: 100%;
+    top: 95%;
+    transform: translate(-50%, -100%);
+    transition: 1s 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  }
+  .signin-signup,
+  .container.sign-up-mode .signin-signup {
+    left: 50%;
+  }
+  .panels-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+  .panel {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2.5rem 8%;
+    grid-column: 1 / 2;
+  }
+  .right-panel {
+    grid-row: 3 / 4;
+  }
+  .left-panel {
+    grid-row: 1 / 2;
+  }
+  .image {
+    width: 200px;
+    max-width: 200px;
+    transition: transform 0.9s ease-in-out, opacity 0.6s ease-in-out;
+    transition-delay: 0.6s;
+  }
+  .panel .content {
+    padding-right: 15%;
+    transition: transform 0.9s ease-in-out, opacity 0.6s ease-in-out;
+    transition-delay: 0.8s;
+  }
+  .panel h3 {
+    font-size: 1.2rem;
+  }
+  .panel p {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+  }
+  .btn.transparent {
+    width: 110px;
+    height: 35px;
+    font-size: 0.7rem;
+  }
+  .container:before {
+    width: 1500px;
+    height: 1500px;
+    transform: translateX(-50%);
+    left: 30%;
+    bottom: 68%;
+    right: initial;
+    top: initial;
+    transition: 2s ease-in-out;
+  }
+  .container.sign-up-mode:before {
+    transform: translate(-50%, 100%);
+    bottom: 32%;
+    right: initial;
+  }
+  .container.sign-up-mode .left-panel .image,
+  .container.sign-up-mode .left-panel .content {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
+  .container.sign-up-mode .right-panel .image,
+  .container.sign-up-mode .right-up-mode .right-panel .content {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  .right-panel .image,
+  .right-panel .content {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+  .container.sign-up-mode .signin-signup {
+    top: 5%;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 570px) {
+  .signin-signup form {
+    padding: 0 1.5rem;
+  }
+  .image {
+    display: none;
+  }
+  .panel .content {
+    padding: 0.5rem 1rem;
+  }
+  .container {
+    padding: 1.5rem;
+  }
+  .container:before {
+    bottom: 72%;
+    left: 50%;
+  }
+  .container.sign-up-mode:before {
+    bottom: 28%;
+    left: 50%;
+  }
+  .auth-card form {
+    padding: 2rem 1.5rem;
+    margin: 0 10px;
+  }
+  .auth-card h2 {
+    font-size: 1.6rem;
+  }
+  .auth-card p {
+    font-size: 0.85rem;
+  }
+  .auth-card input[type="text"],
+  .auth-card .btn.solid {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+  .input-field {
+    max-width: 300px;
+    height: 50px;
+  }
+  .input-field i {
+    line-height: 50px;
+    font-size: 1rem;
+  }
+  .input-field input {
+    font-size: 1rem;
+  }
+  .btn {
+    width: 130px;
+    height: 45px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Header.css */
+
+.header {
+  background-color: rgba(15, 25, 42, 0.9); /* Dark background with slight transparency */
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Deeper shadow for a floating effect */
+  position: sticky; /* Make header sticky */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure header is on top of other content */
+  font-family: "Montserrat", sans-serif; /* Use global font */
+  backdrop-filter: blur(5px); /* Add a subtle glassmorphism blur to the header */
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center; /* Center the navigation links */
+  align-items: center;
+  gap: 2.5rem; /* Increased space between navigation items */
+}
+
+.nav-link {
+  color: #e0e0e0; /* Light text for navigation links */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem; /* Slightly larger font size */
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+  position: relative; /* For the underline effect */
+  padding: 0.2rem 0; /* Add padding for the underline */
+}
+
+.nav-link:hover {
+  color: #00bcd4; /* Accent color on hover (matching Playfair Display titles) */
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.6); /* Subtle neon glow on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Underline effect on hover */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px; /* Thickness of the underline */
+  background-color: #e94560; /* Accent color for the underline */
+  transition: width 0.3s ease-out;
+}
+
+.nav-link:hover::after {
+  width: 100%; /* Expand underline on hover */
+}
+
+.nav-link.cart {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Space between cart icon and badge */
+  color: #e0e0e0; /* Ensure cart link text is light */
+}
+
+.nav-link.cart span[role="img"] {
+  font-size: 1.6rem; /* Larger cart icon */
+  transition: transform 0.3s ease;
+}
+
+.nav-link.cart:hover span[role="img"] {
+  transform: scale(1.1); /* Pop effect on cart icon hover */
+}
+
+.badge {
+  background-color: #e94560; /* Accent color for cart badge */
+  color: white;
+  border-radius: 50%;
+  padding: 0.3rem 0.7rem; /* More padding for a bolder badge */
+  font-size: 0.85rem;
+  min-width: 24px; /* Ensure badge is circular even with single digit */
+  text-align: center;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(233, 69, 96, 0.5); /* Subtle glow for the badge */
+}
+
+/* Media Queries for Header Responsiveness */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1rem;
+  }
+  .nav-bar {
+    gap: 1.5rem;
+    flex-wrap: wrap; /* Allow nav items to wrap */
+    justify-content: space-around; /* Distribute items evenly */
+  }
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.1rem 0;
+  }
+  .nav-link.cart span[role="img"] {
+    font-size: 1.4rem;
+  }
+  .badge {
+    padding: 0.25rem 0.6rem;
+    min-width: 22px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.6rem 0.5rem;
+  }
+  .nav-bar {
+    gap: 1rem;
+  }
+  .nav-link {
+    font-size: 0.9rem;
+  }
+  .nav-link.cart span[role="img"] {
+    font-size: 1.2rem;
+  }
+  .badge {
+    padding: 0.2rem 0.5rem;
+    min-width: 20px;
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,191 @@
+/* OrderStatusPage.css */
+
+.order-status-page {
+  padding: 2.5rem;
+  max-width: 900px; /* Adjust max-width as needed */
+  margin: 3rem auto; /* Center the panel */
+  background-color: rgba(42, 42, 42, 0.7); /* Semi-transparent dark for glass effect */
+  backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+  color: #e0e0e0; /* Light text color */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Deep shadow for floating effect */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  text-align: center; /* Center content within the panel */
+}
+
+.order-status-page h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3rem; /* Large heading */
+  font-weight: 900;
+  color: #00bcd4; /* Accent color for headings */
+  margin-bottom: 2.5rem; /* Space below heading */
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(0, 188, 212, 0.7); /* Neon glow */
+}
+
+/* Empty Orders Message */
+.order-status-page > p {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  text-align: center;
+}
+
+/* Orders List Container */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between order cards */
+  margin-top: 2rem;
+}
+
+/* Individual Order Card Styles */
+.order-card {
+  background-color: rgba(30, 30, 30, 0.8); /* Slightly darker background for cards */
+  border-radius: 10px;
+  padding: 2rem; /* Increased padding */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  text-align: left; /* Align text within the card to the left */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.order-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* More pronounced shadow on hover */
+}
+
+.order-card h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: #e94560; /* Accent color for order ID */
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.order-card p {
+  font-size: 1.1rem;
+  color: #c0c0c0; /* Light gray for general text */
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.order-card p strong {
+  color: #e0e0e0; /* Slightly brighter for strong text */
+}
+
+.order-card h4 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.3rem;
+  color: #00bcd4; /* Accent color for "Items" heading */
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-card li {
+  font-size: 1rem;
+  color: #a0a0a0; /* Slightly muted color for list items */
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem; /* Indent list items */
+  position: relative;
+}
+
+.order-card li::before {
+  content: '•'; /* Bullet point for list items */
+  color: #e94560; /* Accent color for bullet points */
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Status Styling */
+.status-processing {
+  color: #f39c12; /* Orange */
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(243, 156, 18, 0.5);
+}
+
+.status-shipped {
+  color: #3498db; /* Bright Blue */
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.status-delivered {
+  color: #2ecc71; /* Emerald Green */
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+.status-cancelled {
+  color: #e74c3c; /* Alizarin Red */
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+}
+
+.status-default {
+  color: #a0a0a0; /* Gray */
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-status-page {
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+  .order-status-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .order-card {
+    padding: 1.5rem;
+  }
+  .order-card h3 {
+    font-size: 1.5rem;
+  }
+  .order-card p {
+    font-size: 1rem;
+  }
+  .order-card h4 {
+    font-size: 1.2rem;
+  }
+  .order-card li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-status-page {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+  .order-status-page h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .order-card {
+    padding: 1.2rem;
+  }
+  .order-card h3 {
+    font-size: 1.3rem;
+  }
+  .order-card p {
+    font-size: 0.9rem;
+  }
+  .order-card h4 {
+    font-size: 1.1rem;
+  }
+  .order-card li {
+    font-size: 0.85rem;
+  }
+}

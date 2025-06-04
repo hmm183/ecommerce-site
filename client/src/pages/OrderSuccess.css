@@ -1,0 +1,114 @@
+/* OrderSuccess.css */
+
+.order-success-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; /* Takes most of the viewport height */
+  text-align: center;
+  padding: 3rem;
+  max-width: 700px; /* Limit width for better presentation */
+  margin: 3rem auto; /* Center horizontally */
+
+  /* Glassmorphism effect */
+  background-color: rgba(30, 30, 30, 0.7); /* Dark transparent background */
+  backdrop-filter: blur(12px); /* Stronger blur for emphasis */
+  color: #e0e0e0; /* Light text color */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 188, 212, 0.3); /* Deep shadow with cyan glow */
+}
+
+.order-success-container h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3.5rem; /* Large and impactful */
+  font-weight: 900;
+  color: #00bcd4; /* Main accent color (cyan) */
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 25px rgba(0, 188, 212, 0.8); /* Strong neon glow */
+}
+
+.order-success-container p {
+  font-family: "Montserrat", sans-serif; /* Consistent body font */
+  font-size: 1.2rem;
+  color: #c0c0c0; /* Slightly desaturated light text */
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.order-success-container p strong {
+  color: #e94560; /* Accent color for important details */
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(233, 69, 96, 0.5); /* Subtle pink glow */
+}
+
+/* Link as a button */
+.order-success-container .continue-shopping-btn {
+  /* Inherit general button styles from .btn if available in App.css,
+     then override specific properties for this button */
+  background-color: #0f3460; /* A darker blue that stands out */
+  color: white;
+  border: none;
+  border-radius: 49px; /* Pill shape, consistent with .btn */
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  text-decoration: none; /* Remove underline from link */
+  display: inline-block; /* Allows padding and vertical alignment */
+  margin-top: 2rem;
+}
+
+.order-success-container .continue-shopping-btn:hover {
+  background-color: #0c2b4d; /* Darker blue on hover */
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 188, 212, 0.6); /* Cyan glow on hover */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .order-success-container {
+    padding: 2.5rem;
+    margin: 2rem auto;
+    min-height: 70vh;
+  }
+  .order-success-container h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .order-success-container p {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .order-success-container .continue-shopping-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-success-container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    min-height: 60vh;
+  }
+  .order-success-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .order-success-container p {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .order-success-container .continue-shopping-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+}

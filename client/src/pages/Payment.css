@@ -1,0 +1,151 @@
+/* Payment.css */
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; /* Takes most of the viewport height */
+  text-align: center;
+  padding: 3rem;
+  max-width: 600px; /* Limit width for focused content */
+  margin: 3rem auto; /* Center horizontally */
+
+  /* Glassmorphism effect */
+  background-color: rgba(42, 42, 42, 0.7); /* Dark transparent background */
+  backdrop-filter: blur(12px); /* Stronger blur for emphasis */
+  color: #e0e0e0; /* Light text color */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 188, 212, 0.3); /* Deep shadow with cyan glow */
+}
+
+.payment-container h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3rem; /* Large and impactful */
+  font-weight: 900;
+  color: #e94560; /* Accent color (pinkish red) */
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.7); /* Strong neon glow */
+}
+
+.payment-container p {
+  font-family: "Montserrat", sans-serif; /* Consistent body font */
+  font-size: 1.2rem;
+  color: #c0c0c0; /* Slightly desaturated light text */
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.payment-container p strong {
+  color: #00bcd4; /* Accent color for total amount */
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.5); /* Subtle cyan glow */
+}
+
+.payment-container .error-message {
+  color: #ff4d4d; /* Bright red for errors */
+  font-weight: 600;
+  margin-top: -1rem; /* Pull up slightly to reduce gap with previous p */
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+}
+
+.payment-container .btn.solid {
+  /* This will pick up global .btn.solid styles from App.css */
+  margin-top: 1rem; /* Space above the button */
+  min-width: 200px; /* Ensure a good button width */
+}
+
+/* Styling for the "No order data" message */
+.no-order-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Take full viewport height */
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(20, 20, 20, 0.9); /* Very dark background for this specific page */
+  color: #e0e0e0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.no-order-data h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  color: #e94560;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(233, 69, 96, 0.6);
+}
+
+.no-order-data .go-to-checkout-link {
+  color: #00bcd4; /* Cyan link color */
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.no-order-data .go-to-checkout-link:hover {
+  color: #0097a7; /* Darker cyan on hover */
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .payment-container {
+    padding: 2.5rem;
+    margin: 2rem auto;
+    min-height: 70vh;
+  }
+  .payment-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .payment-container p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .payment-container .btn.solid {
+    min-width: 180px;
+  }
+
+  .no-order-data h2 {
+    font-size: 2rem;
+  }
+  .no-order-data .go-to-checkout-link {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    min-height: 60vh;
+  }
+  .payment-container h1 {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  .payment-container p {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .payment-container .btn.solid {
+    min-width: 150px;
+    font-size: 0.9rem;
+  }
+
+  .no-order-data h2 {
+    font-size: 1.6rem;
+  }
+  .no-order-data .go-to-checkout-link {
+    font-size: 0.9rem;
+  }
+}

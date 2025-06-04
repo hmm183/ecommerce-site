@@ -1,0 +1,229 @@
+/* Cart.css */
+
+.cart-page {
+  /* Main container for the cart page, similar to product detail/cards */
+  padding: 2.5rem;
+  max-width: 1000px; /* Slightly wider for the table */
+  margin: 3rem auto; /* Center the card on the page */
+  background-color: rgba(42, 42, 42, 0.7); /* Semi-transparent dark for glass effect */
+  backdrop-filter: blur(8px); /* Blur effect for glassmorphism */
+  color: #e0e0e0; /* Light text color for contrast */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7); /* Deep shadow for floating effect */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+  text-align: center; /* Center content within the page */
+}
+
+.cart-page h1 {
+  font-family: "Playfair Display", serif; /* Consistent title font */
+  font-size: 3rem; /* Large heading */
+  font-weight: 900;
+  color: #00bcd4; /* Accent color for headings */
+  margin-bottom: 2.5rem; /* Space below heading */
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(0, 188, 212, 0.7); /* Neon glow */
+}
+
+/* Styling for the cart table */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+  margin-bottom: 2rem; /* Space below table */
+  background-color: rgba(30, 30, 30, 0.8); /* Slightly darker background for table */
+  border-radius: 10px; /* Rounded corners for the table itself */
+  overflow: hidden; /* Ensures rounded corners apply to content */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow for the table */
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 1.2rem; /* More padding for cells */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border lines */
+  text-align: left;
+  font-size: 1rem;
+}
+
+.cart-table th {
+  background-color: rgba(45, 45, 45, 0.9); /* Darker background for table headers */
+  color: #00bcd4; /* Accent color for table headers */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cart-table td {
+  color: #c0c0c0; /* Light gray for table data */
+}
+
+.cart-table tr:last-child td {
+  border-bottom: none; /* No border on the last row */
+}
+
+/* Product image in table (if you add one later) */
+.cart-table img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* Quantity buttons */
+.cart-table button {
+  background-color: #e94560; /* Accent color for buttons */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem; /* Adjusted padding for small buttons */
+  margin: 0 0.3rem; /* Space between buttons and quantity */
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cart-table button:hover {
+  background-color: #0f3460; /* Darker accent on hover */
+  transform: translateY(-1px); /* Slight lift */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Remove button specific styling */
+.cart-table td:last-child button {
+  background-color: #dc3545; /* Red for remove action */
+  padding: 0.5rem 1rem; /* Slightly larger for "Remove" */
+}
+
+.cart-table td:last-child button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Cart Summary Section */
+.cart-summary {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  align-items: center;
+  gap: 2rem; /* Space between total and checkout button */
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Separator line */
+}
+
+.cart-summary h2 {
+  font-size: 2rem;
+  color: #e0e0e0; /* Light text for total */
+  font-weight: 700;
+}
+
+.cart-summary h2 span {
+  color: #e94560; /* Accent color for the total price */
+}
+
+.cart-summary .btn {
+  /* This will pick up styles from App.css for .btn */
+  min-width: 180px; /* Ensure button has a good width */
+}
+
+/* Empty Cart Message */
+.cart-page > div h1 { /* Targeting the h1 for empty cart specifically */
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  color: #e0e0e0;
+  margin-top: 5rem; /* More space from header */
+  text-align: center;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Table Design */
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 1.5rem;
+    margin: 2rem auto;
+  }
+  .cart-page h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+  .cart-table, .cart-table thead, .cart-table tbody, .cart-table th, .cart-table td, .cart-table tr {
+    display: block; /* Make table elements behave like blocks */
+  }
+  .cart-table thead tr {
+    position: absolute;
+    top: -9999px; /* Hide table headers visually */
+    left: -9999px;
+  }
+  .cart-table tr {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: rgba(30, 30, 30, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  .cart-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%; /* Space for the "label" */
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  .cart-table td:before {
+    content: attr(data-label); /* Use data-label for pseudo-elements */
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #00bcd4; /* Accent color for labels */
+  }
+  /* Assign data-label attributes in your JSX for each td */
+  .cart-table td:nth-of-type(1):before { content: "Product"; }
+  .cart-table td:nth-of-type(2):before { content: "Size"; }
+  .cart-table td:nth-of-type(3):before { content: "Color"; }
+  .cart-table td:nth-of-type(4):before { content: "Quantity"; }
+  .cart-table td:nth-of-type(5):before { content: "Price"; }
+  .cart-table td:nth-of-type(6):before { content: "Subtotal"; }
+  .cart-table td:nth-of-type(7):before { content: "Actions"; }
+
+  .cart-summary {
+    flex-direction: column; /* Stack summary on small screens */
+    align-items: center;
+    gap: 1rem;
+  }
+  .cart-summary h2 {
+    font-size: 1.8rem;
+  }
+  .cart-summary .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-page {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+  .cart-page h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .cart-table td {
+    padding: 0.8rem 10px;
+    padding-left: 45%; /* Adjust padding for smaller screens */
+  }
+  .cart-table td:before {
+    width: 40%;
+  }
+  .cart-table button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  .cart-table td:last-child button {
+    padding: 0.4rem 0.8rem;
+  }
+  .cart-summary h2 {
+    font-size: 1.5rem;
+  }
+}
