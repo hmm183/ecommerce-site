@@ -1,6 +1,6 @@
-**E-Commerce Site**
+# WOT - World of Tshirts (E-Commerce Platform)
 
-A full-stack e-commerce web application built with React (frontend) and Node.js/Express (backend), deployed on Render. This project provides user authentication, product browsing, shopping cart, order placement, and phone/address verification via SMS/email.
+A full-stack, premium e-commerce platform built with **React** (frontend) and **Node.js/Express** (backend). The application boasts a sleek, glassmorphic dark theme, multi-device shopping cart persistence, dynamic search/filter chips, real-time size & color variant stock management, Cloudinary-based product uploads, a mock Razorpay payment gateway, and transactional order confirmation emails.
 
 ---
 
@@ -10,62 +10,64 @@ A full-stack e-commerce web application built with React (frontend) and Node.js/
 2. [Tech Stack](#tech-stack)
 3. [Project Structure](#project-structure)
 4. [Getting Started](#getting-started)
-
    * [Prerequisites](#prerequisites)
    * [Environment Variables](#environment-variables)
    * [Installation](#installation)
    * [Running Locally](#running-locally)
 5. [API Reference](#api-reference)
-6. [Deployment](#deployment)
-7. [Contributing](#contributing)
-8. [License](#license)
+6. [Responsive Design & Aesthetics](#responsive-design--aesthetics)
+7. [License](#license)
 
 ---
 
 ## Features
 
-* User registration & login with JWT authentication
-* OAuth 2.0 login (Google OAuth2 integration)
-* Phone number verification (self & gift) via OTP (Fast2SMS integration)
-* Email notifications for order confirmations
-* CRUD operations for products, cart, orders, addresses
-* Separate API routes for modularity (auth, OAuth, products, cart, orders, phone verification, address management)
-* Logger utility for centralized request/error logging
-* Responsive React frontend with routing and state management
-* Deployment-ready configuration for Vercel
+### 🛒 E-Commerce & Checkout Flow
+* **Persistent Shopping Cart**: Syncs dynamically across different devices utilizing MongoDB and token validation.
+* **Variant-Level Stock Alerts**: Enforces and displays stock levels per size/color combination (e.g., "Only 5 left for M / Blue") and automatically disables adding to cart if a selected variant is sold out.
+* **Mock Razorpay Checkout**: Fully integrated with the official Razorpay Checkout SDK for simulated test transactions.
+* **Automated Confirmations**: Sends beautiful order receipts via Nodemailer upon successful payment checkout.
+
+### 📊 Admin Control Dashboard
+* **Sales Analytics**: Aggregates and displays Total Revenue, Order Counts, and Registered Customers.
+* **Inventory Control & Variant Stock Grid**: Dynamically generates size/color combinational inputs for configuring stock individually. The global stock value is auto-computed from the sum of variants.
+* **Cloudinary Image Uploader**: Allows uploading of product images directly to Cloudinary with secure signature validation.
+
+### 🛡️ Authentication & Verification
+* **Dual-Method Login**: Supports JWT auth (local strategy) and Google OAuth2 integration.
+* **OTP Profile Updates**: Requires OTP email verification when updating critical profile settings (phone/email) and secure password change forms.
+* **Banning System**: Enables admin to toggle access bans on users, immediately redirecting them to an Access Denied landing page.
 
 ---
 
 ## Tech Stack
 
-* **Frontend:** React, React Router, Context API, Fetch API
-* **Backend:** Node.js, Express.js, MongoDB (Mongoose)
-* **Auth:** Passport.js (local strategy & Google OAuth2), JSON Web Tokens (JWT)
-* **SMS:** Fast2SMS API
-* **Email:** Nodemailer
-* **Deployment:** Vercel (serverless functions)
+* **Frontend**: React (Context API, React Router, ChartJS), Vanilla CSS (Glassmorphism & HSL variables).
+* **Backend**: Node.js, Express.js, MongoDB (Mongoose schemas), Passport.js (JWT & Google OAuth2).
+* **Integrations**: Cloudinary (Image management), Razorpay Checkout SDK, Nodemailer (SMTP transactional emails).
+* **Process Monitor**: Nodemon (automatic backend hot-reloading).
 
 ---
 
 ## Project Structure
 
 ```
-└── ecommerce-site-main/
-    ├── client/               # React frontend
-    │   ├── public/           # Static assets
-    │   └── src/              # React components & pages
-    ├── server/               # Express backend
-    │   ├── config/           # Passport configuration
-    │   ├── controllers/      # Route handlers
-    │   ├── middleware/       # JWT auth middleware
-    │   ├── models/           # Mongoose schemas
-    │   ├── routes/           # Express routes
-    │   ├── services/         # SMS & email services
-    │   ├── utils/            # Logger & helpers
-    │   └── index.js          # Entry point
-    ├── .gitignore
-    ├── vercel.json           # Vercel configuration
-    └── README.md             # Project overview
+├── client/                     # React Single Page App
+│   ├── public/                 # Favicons and HTML entry points
+│   └── src/
+│       ├── components/         # Unified navigation headers, auth modals
+│       ├── context/            # Cart and Auth providers
+│       ├── pages/              # Shop, Product Detail, Profile, Admin Panels
+│       └── utils/              # Dynamic URL resolution helpers
+│
+└── server/                     # Node.js REST API
+    ├── config/                 # Passport and Cloudinary connection instances
+    ├── controllers/            # Route controllers (auth, cart, orders, products)
+    ├── middleware/             # JWT and role restriction validation guards
+    ├── models/                 # Mongoose collection models (Product, Order, User)
+    ├── routes/                 # Express routing mounts
+    ├── services/               # SMTP email verification handlers
+    └── index.js                # App entrypoint & Database migration triggers
 ```
 
 ---
@@ -74,44 +76,54 @@ A full-stack e-commerce web application built with React (frontend) and Node.js/
 
 ### Prerequisites
 
-* Node.js >= 14.x
-* npm or yarn
-* MongoDB instance (local or Atlas)
+* Node.js >= 16.x
+* MongoDB (Local instance or Atlas Connection URI)
 
 ### Environment Variables
 
-Create a `.env` file in the `server/` directory with the following variables:
+#### Backend Server (`server/.env`)
+Create a `.env` file in the `server/` directory:
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://...  # Or local mongodb://localhost:27017/wot
+JWT_SECRET=your_jwt_secret_key
 
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Cloudinary Config
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Email Service (SMTP)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+
+# CORS Settings
+FRONTEND_URL=http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5000
 ```
-MONGODB_URI=<Your MongoDB connection string>
-JWT_SECRET=<Your JWT secret key>
-GOOGLE_CLIENT_ID=<Your Google OAuth Client ID>
-GOOGLE_CLIENT_SECRET=<Your Google OAuth Client Secret>
-FAST2SMS_API_KEY=<Your Fast2SMS API key>
-EMAIL_HOST=<SMTP host>
-EMAIL_PORT=<SMTP port>
-EMAIL_USER=<SMTP username>
-EMAIL_PASS=<SMTP password>
+
+#### Frontend Client (`client/.env`)
+Create a `.env` file in the `client/` directory:
+```env
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_RAZORPAY_KEY_ID=rzp_test_StDPzq5fFb8ioX
 ```
 
 ### Installation
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/ecommerce-site-main.git
-   cd ecommerce-site-main
-   ```
-
-2. Install server dependencies:
-
+1. Install dependencies for the server:
    ```bash
    cd server
    npm install
    ```
 
-3. Install client dependencies:
-
+2. Install dependencies for the client:
    ```bash
    cd ../client
    npm install
@@ -119,81 +131,59 @@ EMAIL_PASS=<SMTP password>
 
 ### Running Locally
 
-1. Start the backend server (runs on port 5000 by default):
-
+1. Launch the server (hot-reloaded via nodemon on port 5000):
    ```bash
    cd server
    npm run dev
    ```
 
-2. Start the React frontend (runs on port 3000 by default):
-
+2. Launch the React app (runs on port 3000):
    ```bash
    cd client
    npm start
    ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
-
 ---
 
 ## API Reference
 
-### Auth Routes
+### 🔐 Authentication
+* `POST /api/auth/register` – Registers a new account
+* `POST /api/auth/login` – Logs in and issues JWT
+* `GET /api/auth/google` – Triggers Google OAuth callback login flow
 
-* `POST /api/auth/register` – Register a new user
-* `POST /api/auth/login` – Login and receive JWT
+### 👤 Profile & Users
+* `GET /api/users/profile` – Fetches profile details
+* `POST /api/users/profile/request-otp` – Requests email OTP
+* `POST /api/users/profile/verify-update` – Verifies email/phone changes
+* `POST /api/users/profile/change-password` – Secure password update
 
-### Product Routes
+### 👕 Product Catalog & Ratings
+* `GET /api/products` – Lists all products
+* `GET /api/products/:id` – Fetches product detail
+* `POST /api/products/:id/rate` – Rate/review product (protected)
+* `POST /api/products` – Creates new product (Admin only)
+* `PUT /api/products/:id` – Updates product details (Admin only)
+* `DELETE /api/products/:id` – Deletes product (Admin only)
+* `POST /api/products/upload` – Uploads image to Cloudinary (Admin only)
 
-* `GET /api/products` – List all products
-* `GET /api/products/:id` – Get product details
-* `POST /api/products` – Create a product (protected)
-* `PUT /api/products/:id` – Update product (protected)
-* `DELETE /api/products/:id` – Delete product (protected)
+### 🛒 Shopping Cart
+* `GET /api/cart` – Fetches persisting cart items (protected)
+* `POST /api/cart` – Adds product variant to cart (protected)
+* `PUT /api/cart/:itemId` – Updates quantity (protected)
+* `DELETE /api/cart/:itemId` – Removes variant from cart (protected)
 
-### Cart Routes
-
-* `GET /api/cart` – Get current user's cart (protected)
-* `POST /api/cart` – Add item to cart (protected)
-* `PUT /api/cart/:itemId` – Update cart item (protected)
-* `DELETE /api/cart/:itemId` – Remove cart item (protected)
-
-### Order Routes
-
-* `GET /api/orders` – Get user's orders (protected)
-* `POST /api/orders` – Create a new order (protected)
-
-### Phone Verification
-
-* `POST /api/self-phones` – Verify user's phone number
-* `POST /api/gift-phones` – Verify gift phone number
-
-### Address Routes
-
-* `GET /api/addresses` – List user addresses (protected)
-* `POST /api/addresses` – Add a new address (protected)
+### 📦 Orders & Management
+* `POST /api/orders` – Submits order on payment success (protected)
+* `GET /api/orders/me` – Fetches customer order history (protected)
+* `GET /api/orders` – Lists all order logs (Admin only)
+* `PUT /api/orders/:id/status` – Updates order delivery status (Admin only)
+* `GET /api/admin/stats` – Aggregates analytics totals (Admin only)
 
 ---
 
-## Deployment
+## Responsive Design & Aesthetics
 
-This project is configured for deployment on Render. To deploy:
-
-1. Push your code to a Git repository (GitHub/GitLab).
-2. Sign up or log in to [Render](https://render.com) and create a new **Web Service** for the backend.
-3. Connect your repository and select the `server` directory.
-4. In **Environment** settings, add the same variables from the **Environment Variables** section.
-5. Set the **Build Command** to `npm install` and the **Start Command** to `npm run dev` (or `npm start` for production).
-6. Set up the website
----
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+* **Premium Layouts**: Implemented glassmorphism styling with backdrop blur filters, responsive fonts, and custom HSL gradients.
+* **Mobile Slide-Out Drawer**: The navigation header collapses on viewports below `768px` into a responsive overlay drawer with hardware-accelerated drawer transitions (`translateX`).
+* **Table Column Flex Wrapping**: Custom media queries convert tabular data into card stacking viewports on mobile devices. Long emails and descriptions use `word-break: break-all` to ensure zero card horizontal overflows.

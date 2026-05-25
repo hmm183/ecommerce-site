@@ -27,17 +27,40 @@ const app = express();
 app.use(express.json()); // Parses incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // Parses incoming URL-encoded requests
 
-// Enable CORS for all origins during development.
-// For production, you might want to restrict this to your frontend's domain.
-app.use(cors()); // Use cors middleware
+// Enable CORS dynamically based on ALLOWED_ORIGINS env
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ Connected to Database'))
-.catch((err) => console.error('❌ DB connection error:', err));
+  .then(async () => {
+    console.log('✅ Connected to Database');
+    // Run DB cleanup migration to reset ratings for products with no real reviews
+    try {
+      const Product = require('./models/Product');
+      const result = await Product.updateMany(
+        { $or: [{ ratings: { $exists: false } }, { ratings: { $size: 0 } }] },
+        { $set: { rating: 0, reviewCount: 0 } }
+      );
+      console.log(`🧹 Database migration completed: Cleared rating defaults for ${result.modifiedCount} products.`);
+    } catch (err) {
+      console.error('❌ Database migration error:', err);
+    }
+  })
+  .catch((err) => console.error('❌ DB connection error:', err));
 
 // Session & Passport (for OAuth)
 app.use(session({
@@ -48,7 +71,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Auth routes (signup, signin, OTP, etc.)
+// Auth routes (signup, signin, OTP, Google OAuth, etc.)
 app.use(authRoutes);
 
 // API routes
@@ -61,13 +84,38 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/phone', PhoneRoutes);
 app.use('/api/users', userRoutes);
 
-// Serve React frontend from the build directory
-if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
-  app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
-  });
-}
+// GET /api/admin/stats - Admin Dashboard Metrics
+const Order = require('./models/Order');
+const User = require('./models/User');
+app.get('/api/admin/stats', jwtAuth, async (req, res) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Forbidden. Admins only.' });
+  }
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalOrders = await Order.countDocuments();
+    const revenueResult = await Order.aggregate([
+      { $match: { status: { $ne: 'Cancelled' } } },
+      { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+    ]);
+    const totalRevenue = revenueResult.length > 0 ? revenueResult[0].total : 0;
+
+    res.json({
+      totalUsers,
+      totalOrders,
+      totalRevenue
+    });
+  } catch (err) {
+    console.error('Error fetching admin stats:', err);
+    res.status(500).json({ message: 'Failed to fetch admin stats' });
+  }
+});
+
+// Root health check endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'E-commerce API is running' });
+});
+
 
 // Define the port and start the server
 const PORT = process.env.PORT || 5000;

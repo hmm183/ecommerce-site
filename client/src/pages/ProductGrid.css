@@ -1,176 +1,393 @@
 /* ProductGrid.css */
 
-.product-grid {
-  /* No need for background-color, background-image, background-size here
-     because the body already handles the animated dark dotted background from App.css. */
-  padding: 2rem;
-  color: #e0e0e0; /* Light text color for general content within the grid */
-  min-height: calc(100vh - var(--header-height, 60px)); /* Still ensures height below header */
-  display: flex; /* Use flexbox to center content easily */
-  flex-direction: column;
-  align-items: center; /* Center horizontally */
-}
-
-.product-grid h1 {
-  text-align: center;
-  margin-bottom: 2.5rem; /* Increased margin for better separation */
-  /* Using the accent color for titles, similar to App.css patterns */
-  color: #00bcd4; /* A shade of cyan for a modern, techy look */
-  font-family: "Playfair Display", serif; /* Consistent title font */
-  font-size: 2.8rem; /* Slightly larger heading for prominence */
-  font-weight: 900;
-  letter-spacing: 3px; /* Enhanced letter spacing */
-  text-shadow: 0 0 15px rgba(0, 188, 212, 0.6); /* More pronounced glow for main title */
-  text-transform: uppercase; /* Consistent uppercase for titles */
-}
-
-.product-grid .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Slightly wider minmax */
-  gap: 2rem; /* Increased gap between cards */
+.product-grid-container {
   max-width: 1200px;
-  width: 100%; /* Ensure it takes full width within its padding */
   margin: 0 auto;
+  padding: 3rem 2rem 8rem 2rem;
+  color: var(--text-primary);
+  min-height: calc(100vh - 80px);
+}
+
+.product-grid-container h1 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* Search & Filter Section */
+.search-filter-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  width: 100%;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 1.25rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-color);
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Category Chips */
+.category-chips {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-chip {
+  padding: 0.5rem 1.25rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
+}
+
+.category-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.category-chip.active {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+/* Products Grid & Cards */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  width: 100%;
 }
 
 .product-card {
-  /* Background for individual product cards, distinct from body background */
-  background-color: rgba(42, 42, 42, 0.7); /* Semi-transparent dark for a subtle glass effect */
-  backdrop-filter: blur(5px); /* Light blur for the glass effect */
-  border-radius: 12px; /* More rounded corners */
-  /* Deeper box shadow to give a lifted, floating effect */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  background: var(--container-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border for definition */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .product-card:hover {
-  transform: translateY(-10px) scale(1.02); /* More pronounced lift and slight scale on hover */
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 188, 212, 0.4); /* Stronger shadow with cyan glow */
-  background-color: rgba(50, 50, 50, 0.85); /* Slightly darker on hover */
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-lg);
+  background: var(--container-bg-hover);
 }
 
-.product-card img {
+.product-image-wrapper {
+  position: relative;
   width: 100%;
-  height: 220px; /* Slightly increased image height */
+  height: 240px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-bottom: 1px solid #444;
+  transition: transform 0.5s ease;
 }
 
-.product-card .product-info {
-  padding: 1.5rem 1rem; /* Increased padding */
-  text-align: center;
+.product-card:hover .product-image-wrapper img {
+  transform: scale(1.05);
 }
 
-.product-card h3 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.8rem; /* Slightly more margin */
-  color: #e0e0e0; /* Consistent light text color */
-  font-size: 1.35rem; /* Slightly larger product name */
+.product-info-block {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-category-tag {
+  font-size: 0.75rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
 }
 
-.product-card p {
-  color: #00bcd4; /* Accent color for price to stand out */
-  font-weight: bold;
-  font-size: 1.2rem; /* Larger price font */
-  letter-spacing: 0.5px;
+.product-name-title {
+  font-family: var(--font-main);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
-/* Footer styles for consistency with global theme */
-/* Assuming footerStyle and buttonStyle are still inline in ProductGrid.jsx,
-   I'd strongly recommend moving them to this CSS file for better management.
-   If kept inline, ensure colors match the new theme. */
+.product-price-label {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  margin-top: auto;
+}
 
-/* Example of how the footer CSS could look if moved here: */
-.product-grid-footer {
+/* Floating Cart Overlay Footer */
+.floating-cart-footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(26, 26, 46, 0.9); /* Semi-transparent dark background, matching body base */
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(19, 27, 46, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1.5rem; /* More padding */
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5); /* Deeper shadow */
-  color: #e0e0e0; /* Light text color */
-  z-index: 100; /* Ensure it stays on top */
+  padding: 0.75rem 1.5rem;
+  width: calc(100% - 3rem);
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.product-grid-footer span {
+.cart-footer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.cart-footer-info i {
+  color: var(--accent-color);
   font-size: 1.1rem;
+}
+
+.cart-footer-btn {
+  background: var(--accent-color);
+  color: #fff;
+  border-radius: 30px;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.cart-footer-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Loading & Error States */
+/* Skeleton Loaders */
+.skeleton-card {
+  pointer-events: none;
+}
+.skeleton-image {
+  width: 100%;
+  height: 240px;
+  background: rgba(255, 255, 255, 0.05);
+  animation: shimmer 1.5s infinite linear;
+}
+.skeleton-text {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  animation: shimmer 1.5s infinite linear;
+}
+.skeleton-tag { width: 30%; height: 12px; }
+.skeleton-title { width: 80%; height: 20px; }
+.skeleton-price { width: 40%; height: 24px; margin-top: auto; }
+
+@keyframes shimmer {
+  0% { background-color: rgba(255, 255, 255, 0.02); }
+  50% { background-color: rgba(255, 255, 255, 0.08); }
+  100% { background-color: rgba(255, 255, 255, 0.02); }
+}
+
+.grid-error-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+  font-size: 1.1rem;
+  color: var(--danger);
+}
+
+@media (max-width: 768px) {
+  .product-grid-container {
+    padding: 2rem 1rem 7rem 1rem;
+  }
+  .product-grid-container h1 {
+    font-size: 2rem;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .product-image-wrapper {
+    height: 200px;
+  }
+  .floating-cart-footer {
+    bottom: 1rem;
+    padding: 0.6rem 1rem;
+  }
+  .cart-footer-info {
+    font-size: 0.85rem;
+  }
+}
+
+/* Sale, Featured, and Recommended tags & badges */
+.price-cross {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-right: 0.5rem;
   font-weight: 500;
 }
 
-.product-grid-footer button {
-  /* Reuse the .btn style for consistency, or define specifically */
-  padding: 0.75rem 1.5rem;
-  background-color: #e94560; /* Primary accent color */
-  border: none;
-  border-radius: 25px;
+.price-sale {
+  color: var(--success);
+  font-weight: 800;
+}
+
+.badge-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 10;
+}
+
+.card-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  width: fit-content;
+  animation: badgePulse 2.5s infinite;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.card-badge.sale-badge {
+  background: #ef4444;
   color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Initial shadow */
 }
 
-.product-grid-footer button:hover {
-  background-color: #0f3460; /* Darker accent on hover */
-  transform: translateY(-2px); /* Slight lift */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* More pronounced shadow */
+.card-badge.featured-badge {
+  background: #3b82f6;
+  color: #fff;
 }
 
-/* Media Queries (Ensure these are compatible with your App.css media queries) */
-@media (max-width: 768px) {
-  .product-grid h1 {
-    font-size: 2rem;
-  }
-  .product-grid .grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-  }
-  .product-card img {
-    height: 180px;
-  }
-  .product-card h3 {
-    font-size: 1.2rem;
-  }
-  .product-card p {
-    font-size: 1.1rem;
-  }
-  .product-grid-footer {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
-  .product-grid-footer button {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
+.card-badge.recommended-badge {
+  background: #f59e0b;
+  color: #fff;
 }
 
-@media (max-width: 480px) {
-  .product-grid {
-    padding: 1.5rem;
-  }
-  .product-grid h1 {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-  }
-  .product-grid .grid {
-    grid-template-columns: 1fr; /* Single column on very small screens */
-    gap: 1rem;
-  }
-  .product-card img {
-    height: 160px;
-  }
-  .product-card h3 {
-    font-size: 1.1rem;
-  }
-  .product-card p {
-    font-size: 1rem;
-  }
+.featured-section {
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 100%);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 24px;
+  padding: 2rem;
+}
+
+.featured-section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.featured-section-title i {
+  color: #f59e0b;
+}
+
+.featured-product-card {
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+}
+
+.featured-product-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
 }

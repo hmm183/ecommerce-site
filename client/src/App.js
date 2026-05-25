@@ -19,6 +19,7 @@ import OrderSuccess from './pages/OrderSuccess';
 import OrderStatusPage from './pages/OrderStatusPage';
 import UserManagement from './pages/UserManagement';
 import BannedPage from './pages/BannedPage';
+import Profile from './pages/Profile';
 
 // Helper component for protected routes
 const ProtectedRoute = ({ children, requiresAdmin = false }) => {
@@ -81,6 +82,7 @@ function App() {
       <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
       <Route path="/order-success" element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
       <Route path="/order-status" element={<ProtectedRoute><OrderStatusPage /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
       {/* Protected Admin Routes (accessible only to authenticated admins) */}
       <Route path="/admin" element={<ProtectedRoute requiresAdmin={true}><AdminPanel /></ProtectedRoute>} />

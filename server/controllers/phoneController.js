@@ -74,21 +74,41 @@ exports.verifyOtp = async (req, res) => {
 
   // OTP correct: mark phone as verified in the appropriate collection
   if (mode === 'self') {
-    await SelfPhone.findOneAndUpdate(
-      { user: userId },
-      { $addToSet: { phones: { number: phone, verified: true } } },
-      { upsert: true }
-    );
+    const doc = await SelfPhone.findOne({ user: userId });
+    if (doc) {
+      const phoneIndex = doc.phones.findIndex(p => p.number === phone);
+      if (phoneIndex > -1) {
+        doc.phones[phoneIndex].verified = true;
+      } else {
+        doc.phones.push({ number: phone, verified: true });
+      }
+      await doc.save();
+    } else {
+      await SelfPhone.create({
+        user: userId,
+        phones: [{ number: phone, verified: true }]
+      });
+    }
   } else {
     // gift: need recipientName
     if (!recipientName) {
       return res.status(400).json({ message: 'recipientName required for gifts' });
     }
-    await GiftPhone.findOneAndUpdate(
-      { user: userId },
-      { $addToSet: { gifts: { number: phone, recipientName, verified: true } } },
-      { upsert: true }
-    );
+    const doc = await GiftPhone.findOne({ user: userId });
+    if (doc) {
+      const giftIndex = doc.gifts.findIndex(g => g.number === phone && g.recipientName === recipientName);
+      if (giftIndex > -1) {
+        doc.gifts[giftIndex].verified = true;
+      } else {
+        doc.gifts.push({ number: phone, recipientName, verified: true });
+      }
+      await doc.save();
+    } else {
+      await GiftPhone.create({
+        user: userId,
+        gifts: [{ number: phone, recipientName, verified: true }]
+      });
+    }
   }
 
   // clean up OTP record

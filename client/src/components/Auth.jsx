@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { jwtDecode } from 'jwt-decode'; // <--- IMPORT jwtDecode
+import { jwtDecode } from 'jwt-decode';
+import { getApiUrl } from '../utils/api';
+import './Auth.css';
 
 function Auth() {
   const [isSignUp, setSignUp] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ name: '', email: '', phno: '', password: '' });
+  const [otpLoading, setOtpLoading] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -19,40 +22,36 @@ function Auth() {
   const handleLogin = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('/signin', {
+      const res = await fetch(getApiUrl('/api/auth/signin'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData)
       });
-      const data = await res.json(); // This data contains 'token' and 'message', but NO 'user' object
+      const data = await res.json();
 
       if (res.ok) {
         let decodedUser = {};
         try {
-            // Decode the token to get user details including role and banned status
-            const decodedToken = jwtDecode(data.token);
-            decodedUser = {
-                id: decodedToken.id, // Assuming 'id' is in JWT payload
-                email: decodedToken.email, // Assuming 'email' is in JWT payload
-                role: decodedToken.role,
-                banned: decodedToken.banned
-            };
+          const decodedToken = jwtDecode(data.token);
+          decodedUser = {
+            id: decodedToken.id,
+            email: decodedToken.email,
+            role: decodedToken.role,
+            banned: decodedToken.banned
+          };
         } catch (decodeError) {
-            console.error('Error decoding JWT token:', decodeError);
-            alert('Login successful, but could not read user data. Please try again.');
-            return; // Stop execution if token cannot be decoded
+          console.error('Error decoding JWT token:', decodeError);
+          alert('Login successful, but could not read user data. Please try again.');
+          return;
         }
 
-        // Call the login function from AuthContext with the token and decoded user data
-        login(data.token, decodedUser); // <--- Pass decodedUser here
+        login(data.token, decodedUser);
 
-        // Now, we can immediately navigate based on the decoded role
-        if (decodedUser.role === 'admin') { // <--- Use decodedUser.role
+        if (decodedUser.role === 'admin') {
           navigate('/admin');
         } else {
           navigate('/shop');
         }
-
       } else {
         alert(data.message || 'Login failed');
       }
@@ -62,15 +61,13 @@ function Auth() {
     }
   };
 
-  const [otpLoading, setOtpLoading] = useState(false);
-
   const handleSignup = async e => {
     e.preventDefault();
     if (otpLoading) return;
 
     setOtpLoading(true);
     try {
-      const res = await fetch('/request-otp', {
+      const res = await fetch(getApiUrl('/api/auth/request-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(signupData)
@@ -91,110 +88,142 @@ function Auth() {
   };
 
   return (
-    <div className={`container ${isSignUp ? 'sign-up-mode' : ''}`}>
-      <div className="forms-container">
-        <div className="signin-signup">
-          <form onSubmit={handleLogin} className="sign-in-form">
-            <h2 className="title">Login</h2>
-            <div className="input-field">
-              <i className="fas fa-envelope" />
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={loginData.email}
-                onChange={handleLoginChange}
-                required
-              />
+    <div className="auth-wrapper">
+      <div className="auth-container">
+        <div className="auth-header">
+          <h1 className="auth-logo">WORLD OF<span>TSHIRTS</span></h1>
+          <p className="auth-subtitle">Premium Curated E-Commerce Platform</p>
+        </div>
+
+        <div className="auth-tabs">
+          <button 
+            className={`auth-tab ${!isSignUp ? 'active' : ''}`} 
+            onClick={() => setSignUp(false)}
+          >
+            Sign In
+          </button>
+          <button 
+            className={`auth-tab ${isSignUp ? 'active' : ''}`} 
+            onClick={() => setSignUp(true)}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        {!isSignUp ? (
+          <form onSubmit={handleLogin} className="auth-form">
+            <div className="auth-input-group">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-envelope auth-icon" />
+                <input
+                  type="email"
+                  placeholder="name@example.com"
+                  name="email"
+                  className="auth-input"
+                  value={loginData.email}
+                  onChange={handleLoginChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="input-field">
-              <i className="fas fa-lock" />
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={loginData.password}
-                onChange={handleLoginChange}
-                required
-              />
+
+            <div className="auth-input-group">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-lock auth-icon" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  name="password"
+                  className="auth-input"
+                  value={loginData.password}
+                  onChange={handleLoginChange}
+                  required
+                />
+              </div>
             </div>
-            <button type="submit" className="btn solid">Login</button>
-            <a href="/auth/google" className="btn transparent">
-              <img src="https://i.postimg.cc/3NGKBY4V/google-icon.png" alt="Google" className="icon-img" />
-              Sign in with Google
+
+            <button type="submit" className="btn btn-primary auth-btn">Login</button>
+            
+            <div className="auth-divider">or</div>
+
+            <a href={getApiUrl('/auth/google')} className="google-btn">
+              <img src="https://i.postimg.cc/3NGKBY4V/google-icon.png" alt="Google" />
+              Continue with Google
             </a>
           </form>
+        ) : (
+          <form onSubmit={handleSignup} className="auth-form">
+            <div className="auth-input-group">
+              <label className="auth-label">Full Name</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-user auth-icon" />
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  name="name"
+                  className="auth-input"
+                  value={signupData.name}
+                  onChange={handleSignupChange}
+                  required
+                />
+              </div>
+            </div>
 
-          <form onSubmit={handleSignup} className="sign-up-form">
-            <h2 className="title">Sign up</h2>
-            <div className="input-field">
-              <i className="fas fa-user" />
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={signupData.name}
-                onChange={handleSignupChange}
-                required
-              />
+            <div className="auth-input-group">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-envelope auth-icon" />
+                <input
+                  type="email"
+                  placeholder="name@example.com"
+                  name="email"
+                  className="auth-input"
+                  value={signupData.email}
+                  onChange={handleSignupChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="input-field">
-              <i className="fas fa-envelope" />
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={signupData.email}
-                onChange={handleSignupChange}
-                required
-              />
+
+            <div className="auth-input-group">
+              <label className="auth-label">Phone Number</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-phone auth-icon" />
+                <input
+                  type="text"
+                  placeholder="+91 98765 43210"
+                  name="phno"
+                  className="auth-input"
+                  value={signupData.phno}
+                  onChange={handleSignupChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="input-field">
-              <i className="fas fa-phone" />
-              <input
-                type="text"
-                placeholder="Phone Number"
-                name="phno"
-                value={signupData.phno}
-                onChange={handleSignupChange}
-                required
-              />
+
+            <div className="auth-input-group">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrapper">
+                <i className="fas fa-lock auth-icon" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  name="password"
+                  className="auth-input"
+                  value={signupData.password}
+                  onChange={handleSignupChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="input-field">
-              <i className="fas fa-lock" />
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={signupData.password}
-                onChange={handleSignupChange}
-                required
-              />
-            </div>
-            <button type="submit" className="btn" disabled={otpLoading}>{otpLoading ? 'Sending OTP...' : 'Request OTP'}</button>
+
+            <button type="submit" className="btn btn-primary auth-btn" disabled={otpLoading}>
+              {otpLoading ? 'Sending OTP...' : 'Request OTP'}
+            </button>
           </form>
-        </div>
-      </div>
-
-      <div className="panels-container">
-        <div className="panel left-panel">
-          <div className="content">
-            <h3>New here?</h3>
-            <p>Enter your details to sign up.</p>
-            <button className="btn transparent" onClick={() => setSignUp(true)}>
-              Sign up
-            </button>
-          </div>
-        </div>
-        <div className="panel right-panel">
-          <div className="content">
-            <h3>Already have an account?</h3>
-            <p>Click below to login.</p>
-            <button className="btn transparent" onClick={() => setSignUp(false)}>
-              Sign in
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

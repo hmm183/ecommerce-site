@@ -1,114 +1,115 @@
 /* OrderSuccess.css */
 
-.order-success-container {
+.order-success-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 3rem 1.5rem;
+}
+
+.order-success-card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--container-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 3.5rem 2rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+/* Success Checkmark Circle */
+.success-icon-circle {
+  width: 72px;
+  height: 72px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 80vh; /* Takes most of the viewport height */
-  text-align: center;
-  padding: 3rem;
-  max-width: 700px; /* Limit width for better presentation */
-  margin: 3rem auto; /* Center horizontally */
-
-  /* Glassmorphism effect */
-  background-color: rgba(30, 30, 30, 0.7); /* Dark transparent background */
-  backdrop-filter: blur(12px); /* Stronger blur for emphasis */
-  color: #e0e0e0; /* Light text color */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 188, 212, 0.3); /* Deep shadow with cyan glow */
+  margin: 0 auto 2rem auto;
+  font-size: 2rem;
+  color: var(--success);
+  animation: scalePop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.order-success-container h1 {
-  font-family: "Playfair Display", serif; /* Consistent title font */
-  font-size: 3.5rem; /* Large and impactful */
-  font-weight: 900;
-  color: #00bcd4; /* Main accent color (cyan) */
-  margin-bottom: 2rem;
-  letter-spacing: 2px;
-  text-shadow: 0 0 25px rgba(0, 188, 212, 0.8); /* Strong neon glow */
-}
-
-.order-success-container p {
-  font-family: "Montserrat", sans-serif; /* Consistent body font */
-  font-size: 1.2rem;
-  color: #c0c0c0; /* Slightly desaturated light text */
+.order-success-card h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.order-success-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
-.order-success-container p strong {
-  color: #e94560; /* Accent color for important details */
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(233, 69, 96, 0.5); /* Subtle pink glow */
+.order-details-summary {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-/* Link as a button */
-.order-success-container .continue-shopping-btn {
-  /* Inherit general button styles from .btn if available in App.css,
-     then override specific properties for this button */
-  background-color: #0f3460; /* A darker blue that stands out */
-  color: white;
-  border: none;
-  border-radius: 49px; /* Pill shape, consistent with .btn */
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
+.order-details-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.order-details-summary-row span:first-child {
+  color: var(--text-secondary);
+}
+
+.order-details-summary-row span:last-child {
+  color: #fff;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  text-transform: uppercase;
-  text-decoration: none; /* Remove underline from link */
-  display: inline-block; /* Allows padding and vertical alignment */
-  margin-top: 2rem;
 }
 
-.order-success-container .continue-shopping-btn:hover {
-  background-color: #0c2b4d; /* Darker blue on hover */
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 188, 212, 0.6); /* Cyan glow on hover */
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .order-success-container {
-    padding: 2.5rem;
-    margin: 2rem auto;
-    min-height: 70vh;
+.success-actions .btn {
+  flex: 1;
+  height: 44px;
+}
+
+@keyframes scalePop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
   }
-  .order-success-container h1 {
-    font-size: 2.8rem;
-    margin-bottom: 1.5rem;
-  }
-  .order-success-container p {
-    font-size: 1.1rem;
-    margin-bottom: 0.8rem;
-  }
-  .order-success-container .continue-shopping-btn {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    margin-top: 1.5rem;
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
 @media (max-width: 480px) {
-  .order-success-container {
-    padding: 1.5rem;
-    margin: 1.5rem auto;
-    min-height: 60vh;
+  .order-success-card {
+    padding: 2.5rem 1.25rem;
   }
-  .order-success-container h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  .success-actions {
+    flex-direction: column;
   }
-  .order-success-container p {
-    font-size: 1rem;
-    margin-bottom: 0.6rem;
-  }
-  .order-success-container .continue-shopping-btn {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
-    margin-top: 1rem;
+  .success-actions .btn {
+    width: 100%;
   }
 }

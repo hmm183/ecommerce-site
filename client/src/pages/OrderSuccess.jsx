@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { getApiUrl } from '../utils/api';
+import Header from '../components/Header';
 import './OrderSuccess.css';
 
 export default function OrderSuccess() {
@@ -11,7 +13,7 @@ export default function OrderSuccess() {
 
   useEffect(() => {
     if (orderId) {
-      fetch(`/api/orders/${orderId}`, {
+      fetch(getApiUrl(`/api/orders/${orderId}`), {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -22,24 +24,53 @@ export default function OrderSuccess() {
     }
   }, [orderId]);
 
-  // In client/src/pages/OrderSuccess.jsx, inside the return statement:
   return (
-    <div className="order-success-container"> {/* Apply the main container class */}
-      <h1>Thank you for your purchase!</h1>
-      {orderId ? (
-        order ? (
-          <>
-            <p>Your order <strong>#{order._id.slice(-6)}</strong> has been placed.</p>
-            <p>Total: <strong>₹{order.totalAmount.toFixed(2)}</strong></p>
-            <p>Status: <strong>{order.status}</strong></p>
-            <Link to="/shop" className="continue-shopping-btn">Continue Shopping</Link> {/* Apply button class */}
-          </>
-        ) : (
-          <p>Loading order details…</p>
-        )
-      ) : (
-        <p>No order ID provided.</p>
-      )}
-    </div>
+    <>
+      <Header />
+      <div className="order-success-wrapper">
+        <div className="order-success-card">
+          <div className="success-icon-circle">
+            <i className="fas fa-check" />
+          </div>
+          <h1>Order Confirmed!</h1>
+          <p>Thank you for your purchase! We've sent a confirmation email to your registered email address.</p>
+
+          {orderId ? (
+            order ? (
+              <>
+                <div className="order-details-summary">
+                  <div className="order-details-summary-row">
+                    <span>Order Ref</span>
+                    <span>#{order._id.slice(-6).toUpperCase()}</span>
+                  </div>
+                  <div className="order-details-summary-row">
+                    <span>Total Amount</span>
+                    <span>₹{order.totalAmount.toFixed(2)}</span>
+                  </div>
+                  <div className="order-details-summary-row">
+                    <span>Order Status</span>
+                    <span style={{ color: 'var(--success)', fontWeight: '600' }}>
+                      {order.status.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="success-actions">
+                  <Link to="/shop" className="btn btn-secondary">Continue Shopping</Link>
+                  <Link to="/order-status" className="btn btn-primary">Track Order</Link>
+                </div>
+              </>
+            ) : (
+              <p style={{ color: 'var(--text-muted)' }}>Retrieving purchase details...</p>
+            )
+          ) : (
+            <div style={{ margin: '1.5rem 0' }}>
+              <p style={{ color: 'var(--danger)' }}>No order reference ID detected.</p>
+              <Link to="/shop" className="btn btn-secondary">Back to Shop</Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

@@ -90,7 +90,7 @@ exports.verifyOTP = async (req, res) => {
     delete tempSignups[email];  // cleanup
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id, role: user.role,banned: user.banned },
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role, banned: user.banned },
                             process.env.JWT_SECRET || 'jwt-secret',
                             { expiresIn: '1h' });
     res.status(201).json({ message: 'User created successfully', token });
@@ -113,7 +113,7 @@ exports.signIn = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
     // Successful login
-    const token = jwt.sign({ id: user._id, role: user.role,banned: user.banned },
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role, banned: user.banned },
                            process.env.JWT_SECRET || 'jwt-secret',
                            { expiresIn: '1h' });
     // Log analytics
@@ -148,7 +148,7 @@ exports.googleCallback = async (req, res) => {
 
   // Issue JWT token
   // Ensure that user.role and user.banned are correctly populated from your User model
-  const token = jwt.sign({ id: user._id, role: user.role, banned: user.banned },
+  const token = jwt.sign({ id: user._id, email: user.email, role: user.role, banned: user.banned },
                           process.env.JWT_SECRET || 'jwt-secret',
                           { expiresIn: '1h' });
 
@@ -159,8 +159,9 @@ exports.googleCallback = async (req, res) => {
     redirectUrl = `/admin`;   // Redirect to admin panel if user is an admin
   }
 
-  // Redirect to the determined URL with the token as a query parameter
-  res.redirect(`${redirectUrl}?token=${token}`); // <--- Use the dynamic redirectUrl
+  // Redirect to the determined URL on FRONTEND_URL with the token as a query parameter
+  const frontendBase = process.env.FRONTEND_URL || 'http://localhost:3000';
+  res.redirect(`${frontendBase}${redirectUrl}?token=${token}`);
 };
 
 

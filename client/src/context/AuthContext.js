@@ -4,6 +4,18 @@ import { jwtDecode } from 'jwt-decode'; // Ensure this is installed: npm install
 
 const AuthContext = createContext(null);
 
+// Synchronously extract and store OAuth token from URL before initial render to prevent race conditions
+const searchParams = new URLSearchParams(window.location.search);
+const oauthToken = searchParams.get('token');
+if (oauthToken) {
+  localStorage.setItem('token', oauthToken);
+  // Clean the URL query parameters
+  searchParams.delete('token');
+  const newSearch = searchParams.toString();
+  const cleanUrl = window.location.pathname + (newSearch ? `?${newSearch}` : '') + window.location.hash;
+  window.history.replaceState({}, document.title, cleanUrl);
+}
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,11 +32,10 @@ export const AuthProvider = ({ children }) => {
         if (decoded.exp < currentTime) {
           console.warn('Token expired. Logging out.');
           localStorage.removeItem('token');
-          // localStorage.removeItem('user_data_from_token'); // Not strictly needed if JWT is primary source
           setUser(null);
         } else {
           setUser({
-            id: decoded._id,
+            id: decoded.id || decoded._id,
             email: decoded.email,
             role: decoded.role,
             banned: decoded.banned,
@@ -34,7 +45,6 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Invalid token or decoding error:', error);
         localStorage.removeItem('token');
-        // localStorage.removeItem('user_data_from_token');
         setUser(null);
       }
     } else {

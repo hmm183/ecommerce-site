@@ -1,6 +1,7 @@
 // server/controllers/orderController.js
 const Order    = require('../models/Order');
 const CartItem = require('../models/CartItem');
+const Product  = require('../models/Product');
 const mongoose = require('mongoose'); // Ensure mongoose is imported for ObjectId.isValid
 
 /**
@@ -44,6 +45,49 @@ exports.createOrder = async (req, res) => {
       };
     });
 
+    // 1) Validate stock for all items first
+    for (const item of orderItems) {
+      const productObj = await Product.findById(item.product);
+      if (!productObj) {
+        return res.status(404).json({ message: `Product not found during stock validation: ${item.product}` });
+      }
+
+      if (productObj.variants && productObj.variants.length > 0) {
+        const size = item.size || 'N/A';
+        const color = item.color || 'N/A';
+        const variant = productObj.variants.find(
+          v => v.size.toLowerCase() === size.toLowerCase() && v.color.toLowerCase() === color.toLowerCase()
+        );
+        if (!variant) {
+          return res.status(400).json({ message: `Variant (Size: ${size}, Color: ${color}) not found for product ${productObj.name}` });
+        }
+        if (variant.stock < item.quantity) {
+          return res.status(400).json({ message: `Insufficient stock for product ${productObj.name} (Size: ${size}, Color: ${color}). Requested: ${item.quantity}, Available: ${variant.stock}` });
+        }
+      } else {
+        if (productObj.stock < item.quantity) {
+          return res.status(400).json({ message: `Insufficient stock for product ${productObj.name}. Requested: ${item.quantity}, Available: ${productObj.stock}` });
+        }
+      }
+    }
+
+    // 2) Decrement and save stock for all items
+    for (const item of orderItems) {
+      const productObj = await Product.findById(item.product);
+      if (productObj.variants && productObj.variants.length > 0) {
+        const size = item.size || 'N/A';
+        const color = item.color || 'N/A';
+        const variant = productObj.variants.find(
+          v => v.size.toLowerCase() === size.toLowerCase() && v.color.toLowerCase() === color.toLowerCase()
+        );
+        variant.stock -= item.quantity;
+        productObj.stock = Math.max(0, productObj.stock - item.quantity);
+      } else {
+        productObj.stock -= item.quantity;
+      }
+      await productObj.save();
+    }
+
     const order = await Order.create({
       user: userId,
       items: orderItems, // Use the validated and mapped orderItems
@@ -55,6 +99,18 @@ exports.createOrder = async (req, res) => {
       // status will default to 'Processing'
       // orderedAt and timestamps are automatic
     });
+
+    // populate product details for email formatting
+    const populatedOrder = await Order.findById(order._id).populate('items.product');
+    const { sendOrderConfirmationEmail } = require('../services/emailService');
+    try {
+      if (req.user && req.user.email) {
+        await sendOrderConfirmationEmail(req.user.email, populatedOrder);
+        console.log('✅ Order confirmation email sent to:', req.user.email);
+      }
+    } catch (emailErr) {
+      console.error('❌ Failed to send order confirmation email:', emailErr);
+    }
 
     // clear server-side cart for this user
     await CartItem.deleteMany({ user: userId });
@@ -99,10 +155,10 @@ exports.getOrdersByUser = async (req, res) => {
     // For just basic status, you might not need to populate product details if 'items' already has name/price.
     const orders = await Order.find({ user: userId })
                                .sort({ createdAt: -1 }) // Sort by newest orders first
-                               .populate('items.product', 'name price imageUrl'); // Populate product name, price, imageUrl for display
+                               .populate('items.product', 'name price image'); // Populate product name, price, image for display
 
     if (!orders || orders.length === 0) {
-      return res.status(404).json({ message: 'No orders found for this user.' });
+      return res.status(200).json([]);
     }
 
     res.json(orders);
@@ -157,7 +213,7 @@ exports.getOrderById = async (req, res) => {
   try {
     // 2) Find order, populate products so frontend can show names/prices if desired
     const order = await Order.findById(id)
-      .populate('items.product', 'name price imageUrl')
+      .populate('items.product', 'name price image')
       .populate('user', 'email username');
 
     if (!order) {

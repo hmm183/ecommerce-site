@@ -3,6 +3,13 @@ const express = require('express');
 const router = express.Router();
 const authenticateJWT = require('../middleware/jwtAuth');
 const User = require('../models/User');
+const { getProfile, requestProfileUpdateOTP, verifyProfileUpdate, changePassword } = require('../controllers/userController');
+
+// User Profile routes
+router.get('/profile', authenticateJWT, getProfile);
+router.post('/profile/request-otp', authenticateJWT, requestProfileUpdateOTP);
+router.post('/profile/verify-update', authenticateJWT, verifyProfileUpdate);
+router.post('/profile/change-password', authenticateJWT, changePassword);
 
 // 🔐 Admin Only Middleware
 function isAdmin(req, res, next) {
